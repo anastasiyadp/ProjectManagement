@@ -1,0 +1,46 @@
+﻿@model ProjectManagement.Models.Project
+
+@{
+    ViewBag.Title = "ShowRecipe";
+}
+
+<fieldset>
+    <legend>@Model.Name</legend>
+
+    <div class="display-label"><b>Исполнители</b></div>
+    <ul>
+        @foreach (var c in ViewBag.Employees)
+        {
+            <li>@c.Employee.FirstName  @c.Employee.Surname  @c.Role </li>
+        }
+    </ul>
+
+    <div class="display-label"><b>Заказчик</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Customer.Name)
+    </div>
+    <div class="display-label"><b>Компания-Исполнитель</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Implementer.Name)
+    </div>
+
+    <div class="display-label"><b>Дата начала</b></div>
+    <div class="display-field">
+        @Model.StartDate.ToString("d")
+    </div>
+
+    <div class="display-label"><b>Дата окончания</b></div>
+    <div class="display-field">
+        @Model.FinishDate.ToString("d")
+    </div>
+
+    <div class="display-label"><b>Приоритет</b></div>
+    <div class="display-field">
+        @Model.Priority
+    </div>
+
+    
+    @Html.ActionLink("Удалить", "Delete", new { id = Model.ProjectId })
+   
+
+</fieldset>

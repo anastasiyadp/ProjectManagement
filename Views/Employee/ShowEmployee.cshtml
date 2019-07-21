@@ -1,0 +1,36 @@
+﻿@model ProjectManagement.Models.Employee
+
+@{
+    ViewBag.Title = "Просмотр сотрудника";
+}
+
+<fieldset>
+    <div class="display-label"><b>Фамилия</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Surname)
+    </div>
+    <div class="display-label"><b>Имя</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label"><b>Отчество</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Patronymic)
+    </div>
+
+    <div class="display-label"><b>Email</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label"><b>Компания</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Implementer.Name)
+    </div>
+
+
+    @Html.ActionLink("Удалить", "DeleteEmployee", new { id = Model.EmployeeId })
+
+
+</fieldset>

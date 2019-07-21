@@ -1,0 +1,26 @@
+﻿@model ProjectManagement.Models.Project
+
+@{
+    ViewBag.Title = "Создание проекта";
+}
+
+<h2>Создание проекта</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Name, "Название")
+    <br />
+    @Html.EditorFor(model => model.Name)
+    <br /><br />
+    @Html.LabelFor(model => model.Priority, "Приоритет")
+    <br />
+    @Html.EditorFor(model => model.Priority)
+    <br /><br />
+    @Html.LabelFor(model => model.CustomerId, "Заказчик")
+    <br />
+    @Html.DropDownListFor(model => model.CustomerId, ViewBag.Cus as SelectList)
+    <br /><br />
+
+    <input type="submit" value="Добавить" />
+}

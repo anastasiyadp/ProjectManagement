@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProjectManagement.Models.Employee>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<a href="/Employee/CreateEmployee ">Создать</a>
+<table>
+    <tr>
+        <th style="width: 15%">Фамилия</th>
+        <th style="width: 15%">Имя</th>
+        <th style="width: 15%">Отчество</th>
+        <th style="width: 15%">Компания</th>
+    </tr>
+    @foreach (ProjectManagement.Models.Employee employee in Model)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(employee.Surname, "ShowEmployee", new { id = employee.EmployeeId })
+        </td>
+        <td>
+            @employee.FirstName
+        </td>
+        <td>
+            @employee.Patronymic
+        </td>
+        <td>
+            @employee.Implementer.Name
+        </td>
+    </tr>
+    }
+</table>

@@ -93,24 +93,21 @@ namespace ProjectManagement.Models
                     StartDate = new DateTime(2019, 3, 2),
                     FinishDate = new DateTime(2019, 9, 2),
                     Priority = (int)Priority.Высокий,
-                    CustomerId = 3,
-                    //ImplementerId = 1
+                    CustomerId = 3
                 },
                  new Project {
                     Name ="Система управления складом",
                     StartDate = new DateTime(2019, 7, 17),
                     FinishDate = new DateTime(2020, 2, 17),
                     Priority = (int)Priority.Средний,
-                    CustomerId = 1,
-                    //ImplementerId = 2
+                    CustomerId = 1
                 },
                   new Project {
                     Name ="Мобильное приложение для клиентов",
                     StartDate = new DateTime(2019, 1, 15),
                     FinishDate = new DateTime(2019, 5, 15),
                     Priority = (int)Priority.Низкий,
-                    CustomerId = 2,
-                    //ImplementerId = 3
+                    CustomerId = 2
                 }
             };
 
@@ -119,16 +116,16 @@ namespace ProjectManagement.Models
 
             List<EmployeeProject> employeeProjects = new List<EmployeeProject>
             {
-                new EmployeeProject { EmployeeId = 1, ProjectId = 1, Role= (int)Role.Руководитель },
-                new EmployeeProject { EmployeeId = 2, ProjectId = 2, Role= (int)Role.Руководитель},
-                new EmployeeProject { EmployeeId = 3, ProjectId = 1, Role= (int)Role.Исполнитель },
-                new EmployeeProject { EmployeeId = 3, ProjectId = 2, Role= (int)Role.Исполнитель },
-                new EmployeeProject { EmployeeId = 5, ProjectId = 1, Role= (int)Role.Исполнитель },
-                new EmployeeProject { EmployeeId = 6, ProjectId = 3, Role= (int)Role.Исполнитель },
-                new EmployeeProject { EmployeeId = 2, ProjectId = 3, Role= (int)Role.Исполнитель},
-                new EmployeeProject { EmployeeId = 1, ProjectId = 2, Role= (int)Role.Исполнитель },
-                new EmployeeProject { EmployeeId = 3, ProjectId = 3, Role= (int)Role.Руководитель },
-                new EmployeeProject { EmployeeId = 6, ProjectId = 2, Role= (int)Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 1, ProjectId = 1, Role= Role.Руководитель },
+                new EmployeeProject { EmployeeId = 2, ProjectId = 2, Role= Role.Руководитель},
+                new EmployeeProject { EmployeeId = 3, ProjectId = 1, Role= Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 3, ProjectId = 2, Role= Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 5, ProjectId = 1, Role= Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 6, ProjectId = 3, Role= Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 2, ProjectId = 3, Role= Role.Исполнитель},
+                new EmployeeProject { EmployeeId = 1, ProjectId = 2, Role= Role.Исполнитель },
+                new EmployeeProject { EmployeeId = 3, ProjectId = 3, Role= Role.Руководитель },
+                new EmployeeProject { EmployeeId = 6, ProjectId = 2, Role= Role.Исполнитель },
             };
             employeeProjects.ForEach(employeeProject => context.EmployeeProjects.Add(employeeProject));
             context.SaveChanges();

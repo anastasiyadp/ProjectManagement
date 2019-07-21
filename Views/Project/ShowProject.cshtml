@@ -1,17 +1,17 @@
 ﻿@model ProjectManagement.Models.Project
 
 @{
-    ViewBag.Title = "ShowRecipe";
+    ViewBag.Title = "Просмотр проекта";
 }
 
 <fieldset>
     <legend>@Model.Name</legend>
 
-    <div class="display-label"><b>Исполнители</b></div>
+    <div class="display-label"><b>Участники</b></div>
     <ul>
         @foreach (var c in ViewBag.Employees)
         {
-            <li>@c.Employee.FirstName  @c.Employee.Surname  @c.Role </li>
+        <li>@c.Role <b>:</b> @c.Employee.FirstName  @c.Employee.Surname   </li>
         }
     </ul>
 
@@ -21,7 +21,7 @@
     </div>
     <div class="display-label"><b>Компания-Исполнитель</b></div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Implementer.Name)
+      @ViewBag.Employees[1].Employee.Implementer.Name
     </div>
 
     <div class="display-label"><b>Дата начала</b></div>
@@ -40,7 +40,7 @@
     </div>
 
     
-    @Html.ActionLink("Удалить", "Delete", new { id = Model.ProjectId })
+    @Html.ActionLink("Удалить", "DeleteProject", new { id = Model.ProjectId })
    
 
 </fieldset>

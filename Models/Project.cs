@@ -18,10 +18,6 @@ namespace ProjectManagement.Models
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        //ссылка на исполнителя
-       // public int ImplementerId { get; set; }
-        public Implementer Implementer { get; set; }
-
         //Ссылка на сотрудников
         public virtual List<Employee> Employees { get; set; }
     }

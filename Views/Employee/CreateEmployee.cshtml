@@ -1,0 +1,35 @@
+﻿@model ProjectManagement.Models.Employee
+
+@{
+    ViewBag.Title = "Новый сотрудник";
+}
+
+<h2>Новый сотрудник</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Surname, "Фамилия")
+    <br />
+    @Html.EditorFor(model => model.Surname)
+    <br /><br />
+    @Html.LabelFor(model => model.FirstName, "Имя")
+    <br />
+    @Html.EditorFor(model => model.FirstName)
+    <br /><br />
+    @Html.LabelFor(model => model.Patronymic, "Отчество")
+    <br />
+    @Html.EditorFor(model => model.Patronymic)
+    <br /><br />
+    @Html.LabelFor(model => model.Email, "Email")
+    <br />
+    @Html.EditorFor(model => model.Email)
+    <br /><br />
+    @Html.LabelFor(model => model.ImplementerId, "Компания")
+    <br />
+    @Html.DropDownListFor(model => model.ImplementerId, ViewBag.Imp as SelectList)
+    <br /><br />
+
+
+    <input type="submit" value="Добавить" />
+}

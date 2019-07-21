@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ProjectManagement.Models.Project>
+
+@{
+    ViewBag.Title = "Проекты";
+}
+
+<a href="/Project/CreateProject ">Создать</a>
+<table>
+    <tr>
+        <th style="width: 10%">Название</th>
+        <th style="width: 10%">Дата начала</th>
+        <th style="width: 10%">Дата окончания</th>
+    </tr>
+    @foreach (ProjectManagement.Models.Project project in Model)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(project.Name, "ShowProject", new { id = project.ProjectId })
+        </td>
+        <td>
+            @project.StartDate.ToString("d")
+        </td>
+        <td>
+            @project.FinishDate.ToString("d")
+        </td>
+    </tr>
+    }
+</table>

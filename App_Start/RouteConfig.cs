@@ -16,8 +16,12 @@ namespace ProjectManagement
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Project", action = "AllProjects", id = UrlParameter.Optional }
             );
+
+            //routes.MapRoute("Employee", "{controller}/{action}",
+            //    defaults: new { controller = "Employee", action = "AllEmployees" }
+            //);
         }
     }
 }

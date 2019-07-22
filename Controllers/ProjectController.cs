@@ -14,17 +14,16 @@ namespace ProjectManagement.Controllers
     {
         private ProjectContext db = new ProjectContext();
 
-        public ActionResult AllProjects(SortStateProject sortOrder = SortStateProject.NameAsc)
+        public ActionResult AllProjects(int? customer, SortStateProject sortOrder = SortStateProject.NameAsc)
         {
-            ViewBag.NameSort = sortOrder == SortStateProject.NameAsc ? SortStateProject.NameDesc : SortStateProject.NameAsc;
-            ViewBag.PrioritySort = sortOrder == SortStateProject.PriorityAsc ? SortStateProject.PriorityDesc : SortStateProject.PriorityAsc;
-            ViewBag.StartDateSort = sortOrder == SortStateProject.StartDateAsc ? SortStateProject.StartDateDesc : SortStateProject.StartDateAsc;
-            ViewBag.FinishDateSort = sortOrder == SortStateProject.FinishDateAsc ? SortStateProject.FinishDateDesc : SortStateProject.FinishDateAsc;
-            ViewBag.CustomerSort = sortOrder == SortStateProject.CustomerAsc ? SortStateProject.CustomerDesc : SortStateProject.CustomerAsc;
+            var projects = db.Projects.Include(c=>c.Customer);
+            //фильтрация 
+            if (customer!=null && customer != 0)
+            {
+                projects = projects.Where(p => p.CustomerId == customer);
+            }
 
-            var projects = from project in db.Projects.Include(c=>c.Customer)
-                           select project;
-
+            //сортировка
             switch (sortOrder)
             {
                 case SortStateProject.NameDesc:
@@ -58,7 +57,16 @@ namespace ProjectManagement.Controllers
                     projects = projects.OrderBy(s => s.Name);
                     break;
             }
-            return View(projects.ToList());
+
+
+            //формирование модели представления
+            AllProjectViewModel viewModel = new AllProjectViewModel
+            {
+                SortProjectModel = new SortProjectModel(sortOrder),
+                FilterProjectModel = new FilterProjectModel(db.Customers.ToList(), customer),                
+                Projects = projects
+            };
+            return View(viewModel);
         }
 
         public ActionResult ShowProject(int id)

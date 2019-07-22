@@ -11,7 +11,7 @@
     <ul>
         @foreach (var c in ViewBag.Employees)
         {
-        <li>@c.Role <b>:</b> @c.Employee.FirstName  @c.Employee.Surname   </li>
+            <li>@c.Role <b>:</b> @c.Employee.FirstName  @c.Employee.Surname   </li>
         }
     </ul>
 
@@ -21,7 +21,7 @@
     </div>
     <div class="display-label"><b>Компания-Исполнитель</b></div>
     <div class="display-field">
-      @ViewBag.Employees[1].Employee.Implementer.Name
+        @ViewBag.Employees[0].Employee.Implementer.Name
     </div>
 
     <div class="display-label"><b>Дата начала</b></div>
@@ -39,8 +39,9 @@
         @Model.Priority
     </div>
 
-    
+
+    @Html.ActionLink("Редактировать", "EditProject", new { id = Model.ProjectId })
     @Html.ActionLink("Удалить", "DeleteProject", new { id = Model.ProjectId })
-   
+
 
 </fieldset>

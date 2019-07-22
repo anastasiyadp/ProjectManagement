@@ -13,6 +13,16 @@
     <br />
     @Html.EditorFor(model => model.Name)
     <br /><br />
+
+    @Html.LabelFor(model => model.StartDate, "Дата начала")
+    <br />
+    @Html.EditorFor(model => model.StartDate)
+    <br /><br />
+    @Html.LabelFor(model => model.FinishDate, "Дата окончания")
+    <br />
+    @Html.EditorFor(model => model.FinishDate)
+    <br /><br />
+
     @Html.LabelFor(model => model.Priority, "Приоритет")
     <br />
     @Html.EditorFor(model => model.Priority)
@@ -21,6 +31,7 @@
     <br />
     @Html.DropDownListFor(model => model.CustomerId, ViewBag.Cus as SelectList)
     <br /><br />
+    
 
     <input type="submit" value="Добавить" />
 }

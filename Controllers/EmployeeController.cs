@@ -44,6 +44,21 @@ namespace ProjectManagement.Controllers
             return RedirectToAction("AllEmployees");
         }
 
+        public ActionResult EditEmployee(int Id)
+        {
+            Employee employee = db.Employees.Where(empl =>empl.EmployeeId == Id).FirstOrDefault();
+
+            return View(employee);
+        }
+
+        [HttpPost]
+        public ActionResult EditEmployee(Employee employee)
+        {
+            db.Entry(employee).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AllEmployees");
+        }
+
 
         public ActionResult DeleteEmployee(int id)
         {

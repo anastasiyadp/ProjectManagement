@@ -1,28 +1,62 @@
 ﻿@model IEnumerable<ProjectManagement.Models.Project>
-
 @{
     ViewBag.Title = "Проекты";
 }
 
 <a href="/Project/CreateProject ">Создать</a>
+
+
 <table>
     <tr>
-        <th style="width: 10%">Название</th>
-        <th style="width: 10%">Дата начала</th>
-        <th style="width: 10%">Дата окончания</th>
+        <th style="width: 10%">
+            @Html.ActionLink("Название", "AllProjects", new { sortOrder = ViewBag.NameSort })
+        </th>
+
+        <th style="width: 10%">
+            @Html.ActionLink("Дата начала", "AllProjects", new { sortOrder = ViewBag.StartDateSort })
+        </th>
+
+        <th style="width: 10%">
+            @Html.ActionLink("Дата окончания", "AllProjects", new { sortOrder = ViewBag.FinishDateSort })
+        </th>
+
+        <th style="width: 10%">
+            @Html.ActionLink("Приоритет", "AllProjects", new { sortOrder = ViewBag.PrioritySort })
+
+        </th>
+        <th style="width: 10%">
+            @Html.ActionLink("Заказчик", "AllProjects", new { sortOrder = ViewBag.CustomerSort })
+
+        </th>
     </tr>
     @foreach (ProjectManagement.Models.Project project in Model)
     {
-    <tr>
-        <td>
-            @Html.ActionLink(project.Name, "ShowProject", new { id = project.ProjectId })
-        </td>
-        <td>
-            @project.StartDate.ToString("d")
-        </td>
-        <td>
-            @project.FinishDate.ToString("d")
-        </td>
-    </tr>
+        <tr>
+            <td> @Html.ActionLink(project.Name, "ShowProject", new { id = project.ProjectId })</td>
+            <td>@project.StartDate.ToString("d")</td>
+            <td>@project.FinishDate.ToString("d")</td>
+            <td>@project.Priority</td>
+            <td>@project.Customer.Name</td>
+        </tr>
     }
+
+    @*<tr>
+            <th style="width: 10%">Название</th>
+            <th style="width: 10%">Дата начала</th>
+            <th style="width: 10%">Дата окончания</th>
+        </tr>
+        @foreach (ProjectManagement.Models.Project project in Model)
+        {
+        <tr>
+            <td>
+                @Html.ActionLink(project.Name, "ShowProject", new { id = project.ProjectId })
+            </td>
+            <td>
+                @project.StartDate.ToString("d")
+            </td>
+            <td>
+                @project.FinishDate.ToString("d")
+            </td>
+        </tr>
+        }*@
 </table>

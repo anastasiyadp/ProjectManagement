@@ -14,13 +14,20 @@ namespace ProjectManagement.Controllers
     {
         private ProjectContext db = new ProjectContext();
 
-        public ActionResult AllProjects(int? customer, SortStateProject sortOrder = SortStateProject.NameAsc)
+        public ActionResult AllProjects(int? customer, DateTime? start, DateTime? finish, SortStateProject sortOrder = SortStateProject.NameAsc)
         {
             var projects = db.Projects.Include(c=>c.Customer);
+
             //фильтрация 
             if (customer!=null && customer != 0)
             {
                 projects = projects.Where(p => p.CustomerId == customer);
+            }
+
+            if (start!=null &&finish!=null)
+            {
+                projects = projects.Where(x => x.StartDate >= start
+                    && x.StartDate <= finish);
             }
 
             //сортировка
@@ -63,7 +70,7 @@ namespace ProjectManagement.Controllers
             AllProjectViewModel viewModel = new AllProjectViewModel
             {
                 SortProjectModel = new SortProjectModel(sortOrder),
-                FilterProjectModel = new FilterProjectModel(db.Customers.ToList(), customer),                
+                FilterProjectModel = new FilterProjectModel(db.Customers.ToList(), customer, start, finish),                
                 Projects = projects
             };
             return View(viewModel);
@@ -88,17 +95,23 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
+        
+
         [HttpPost]
-        public ActionResult CreateProject(Project project)
+        public ActionResult CreateProject(Project project, int[] emplo)
         {
-            db.Projects.Add(project);
+            foreach (var c in emplo)
+            {               
+                project.Employees.Add(db.Employees.Include(em => em.Implementer).Where(x => x.EmployeeId == c).FirstOrDefault());
+            }
+            db.Entry(project).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("AllProjects");
         }
 
         public ActionResult EditProject(int Id)
         {
-            Project project = db.Projects.Where(proj => proj.ProjectId == Id).FirstOrDefault();
+            Project project = db.Projects.Include(c=>c.Customer).Where(proj => proj.ProjectId == Id).FirstOrDefault();
 
             return View(project);
         }

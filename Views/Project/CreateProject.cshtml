@@ -31,7 +31,9 @@
     <br />
     @Html.DropDownListFor(model => model.CustomerId, ViewBag.Cus as SelectList)
     <br /><br />
-    
+
+    @Html.DropDownList("emplo", (MultiSelectList)ViewBag.Emp, new { multiple = "multiple" })
+   // @Html.ListBox("employeeId", (MultiSelectList)ViewBag.Emp)
 
     <input type="submit" value="Добавить" />
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ProjectManagement.Models
 {
@@ -9,11 +10,5 @@ namespace ProjectManagement.Models
     {
         public Project Project { get; set; }
         public Role Role { get; set; }
-
-        public CreateProjectViewModel(Project project, Role role) //create a constructor 
-        {
-            this.Project = project;           
-            this.Role = role;
-        }
     }
 }

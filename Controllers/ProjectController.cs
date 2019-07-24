@@ -93,48 +93,81 @@ namespace ProjectManagement.Controllers
             ViewBag.Customer = new SelectList(db.Customers, "CustomerId", "Name");
             ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Surname");
             ViewBag.Role = new SelectList(Enum.GetValues(typeof(Role)).Cast<Role>().ToList());
-            return View();
+            var news = new CreateProjectViewModel();
+            return View(news);
         }
 
         
 
         [HttpPost]
-        public ActionResult CreateProject(Project project, FormCollection form)
+        public ActionResult CreateProject(FormCollection form)
         {
-            string[] allID = form["EmployeeProjects"].Split(char.Parse(","));
-            string[] rol = form["RoleId"].Split(char.Parse(","));
-            foreach (var strId in allID)
-            {
-                int id = Convert.ToInt32(strId);
+            var enumRole = Enum.GetValues(typeof(Role)).Cast<Role>().ToList();
+            string[] allID = form["Project.EmployeeProjects"].Split(char.Parse(","));
+            string[] rol = form["Role"].Split(char.Parse(","));
+                     
+            Project prj = new Project();
+            prj.Name = form["Project.Name"];
+            prj.Priority = Convert.ToInt32(form["Project.Priority"]);
+            prj.StartDate = Convert.ToDateTime(form["Project.StartDate"]);
+            prj.FinishDate = Convert.ToDateTime(form["Project.FinishDate"]);
+            prj.CustomerId = Convert.ToInt32(form["Project.CustomerId"]);
+
+            for (int i = 0; i<allID.Length; i++) {
+                int id = Convert.ToInt32(allID[i]);
+                Role role = (Role)Enum.Parse(typeof(Role), rol[i]);
                 Employee employee = db.Employees.Include(em => em.Implementer).Where(x => x.EmployeeId == id).FirstOrDefault();
-                EmployeeProject empPrj = new EmployeeProject { Employee = employee, Project = project, Role = Role.Исполнитель};
+                EmployeeProject empPrj = new EmployeeProject { Employee = employee, Project = prj, Role = role };
                 db.EmployeeProjects.Add(empPrj);
             }
-            db.Projects.Add(project);
+            
+            db.Projects.Add(prj);
             db.SaveChanges();
             return RedirectToAction("AllProjects");
         }
 
         public ActionResult EditProject(int id)
         {
+            CreateProjectViewModel test = new CreateProjectViewModel();
             Project project = db.Projects.Include(c=>c.Customer).Where(proj => proj.ProjectId == id).FirstOrDefault();
-            var test = db.EmployeeProjects.Include(em => em.Employee).Include(im => im.Employee.Implementer).Where(empr => empr.Project.ProjectId == id).ToList();
+            var listEmployeePrj = db.EmployeeProjects.Include(em => em.Employee).Include(im => im.Employee.Implementer).Where(empr => empr.Project.ProjectId == id).ToList();
             List<Employee> emp = new List<Employee>();
-            foreach (var c in test)
+            foreach (var c in listEmployeePrj)
             {
                 emp.Add(c.Employee);
             }
             ViewBag.EmployeesPrj = emp;
             ViewBag.Employees = db.Employees.ToList();
-            return View(project);
+            ViewBag.Role = new SelectList(Enum.GetValues(typeof(Role)).Cast<Role>().ToList());
+            test.Project = project;
+            return View(test);
         }
 
         [HttpPost]
-        public ActionResult EditProject(Project project, int[] selectedCourses)
+        public ActionResult EditProject(FormCollection form)
         {
-           
-           // db.Projects.Add(project);
-            db.Entry(project).State = EntityState.Modified;
+            var enumRole = Enum.GetValues(typeof(Role)).Cast<Role>().ToList();
+            string[] allID = form["selectedEmployees"].Split(char.Parse(","));
+            string[] rol = form["Role"].Split(char.Parse(","));
+
+            Project prj = new Project();
+            prj.Name = form["Project.Name"];
+            prj.Priority = Convert.ToInt32(form["Project.Priority"]);
+            prj.StartDate = Convert.ToDateTime(form["Project.StartDate"]);
+            prj.FinishDate = Convert.ToDateTime(form["Project.FinishDate"]);
+            prj.CustomerId = Convert.ToInt32(form["Project.CustomerId"]);
+            List<EmployeeProject> list = new List<EmployeeProject>();
+            for (int i = 0; i < allID.Length; i++)
+            {
+                int id = Convert.ToInt32(allID[i]);
+                Role role = (Role)Enum.Parse(typeof(Role), rol[id]);
+                Employee employee = db.Employees.Include(em => em.Implementer).Where(x => x.EmployeeId == id).FirstOrDefault();
+                EmployeeProject empPrj = new EmployeeProject { Employee = employee, Project = prj, Role = role };
+                 list.Add(empPrj);
+            }
+            prj.EmployeeProjects = list;
+            //db.Projects.Add(prj);
+            db.Entry(prj).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("AllProjects");
         }

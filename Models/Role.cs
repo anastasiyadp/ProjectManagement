@@ -8,6 +8,6 @@ namespace ProjectManagement.Models
     public enum Role
     {
         Руководитель = 1,
-        Исполнитель
+        Исполнитель = 2 
     }
 }

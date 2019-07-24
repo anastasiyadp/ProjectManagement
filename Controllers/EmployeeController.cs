@@ -21,7 +21,7 @@ namespace ProjectManagement.Controllers
         public ActionResult ShowEmployee(int id)
         {
             Employee employee = db.Employees.Include(c => c.Implementer).Where(c => c.EmployeeId == id).FirstOrDefault();
-           //ViewBag.Projects = db.EmployeeProjects.Include(em => em.Project).Where(empr => empr.Employee.EmployeeId == id).ToList();
+            ViewBag.Projects = db.EmployeeProjects.Include(em => em.Project).Where(empr => empr.Employee.EmployeeId == id).ToList();
             if (employee == null)
             {
                 return HttpNotFound();

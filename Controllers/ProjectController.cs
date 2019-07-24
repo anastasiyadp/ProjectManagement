@@ -90,35 +90,50 @@ namespace ProjectManagement.Controllers
         [HttpGet]
         public ActionResult CreateProject()
         {
-            ViewBag.Cus = new SelectList(db.Customers, "CustomerId", "Name");
-            ViewBag.Emp = new MultiSelectList(db.Employees, "EmployeeId", "Surname");
+            ViewBag.Customer = new SelectList(db.Customers, "CustomerId", "Name");
+            ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Surname");
+            ViewBag.Role = new SelectList(Enum.GetValues(typeof(Role)).Cast<Role>().ToList());
             return View();
         }
 
         
 
         [HttpPost]
-        public ActionResult CreateProject(Project project, int[] emplo)
+        public ActionResult CreateProject(Project project, FormCollection form)
         {
-            foreach (var c in emplo)
-            {               
-                project.Employees.Add(db.Employees.Include(em => em.Implementer).Where(x => x.EmployeeId == c).FirstOrDefault());
+            string[] allID = form["EmployeeProjects"].Split(char.Parse(","));
+            string[] rol = form["RoleId"].Split(char.Parse(","));
+            foreach (var strId in allID)
+            {
+                int id = Convert.ToInt32(strId);
+                Employee employee = db.Employees.Include(em => em.Implementer).Where(x => x.EmployeeId == id).FirstOrDefault();
+                EmployeeProject empPrj = new EmployeeProject { Employee = employee, Project = project, Role = Role.Исполнитель};
+                db.EmployeeProjects.Add(empPrj);
             }
-            db.Entry(project).State = EntityState.Modified;
+            db.Projects.Add(project);
             db.SaveChanges();
             return RedirectToAction("AllProjects");
         }
 
-        public ActionResult EditProject(int Id)
+        public ActionResult EditProject(int id)
         {
-            Project project = db.Projects.Include(c=>c.Customer).Where(proj => proj.ProjectId == Id).FirstOrDefault();
-
+            Project project = db.Projects.Include(c=>c.Customer).Where(proj => proj.ProjectId == id).FirstOrDefault();
+            var test = db.EmployeeProjects.Include(em => em.Employee).Include(im => im.Employee.Implementer).Where(empr => empr.Project.ProjectId == id).ToList();
+            List<Employee> emp = new List<Employee>();
+            foreach (var c in test)
+            {
+                emp.Add(c.Employee);
+            }
+            ViewBag.EmployeesPrj = emp;
+            ViewBag.Employees = db.Employees.ToList();
             return View(project);
         }
 
         [HttpPost]
-        public ActionResult EditProject(Project project)
+        public ActionResult EditProject(Project project, int[] selectedCourses)
         {
+           
+           // db.Projects.Add(project);
             db.Entry(project).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("AllProjects");

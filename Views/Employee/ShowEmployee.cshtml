@@ -29,6 +29,15 @@
         @Html.DisplayFor(model => model.Implementer.Name)
     </div>
 
+    <div class="display-label"><b>Участвует в проектах</b></div>
+    <ul>
+        @foreach (var c in ViewBag.Projects)
+        {
+            <li> @c.Project.Name </li>
+        }
+    </ul>
+
+
     @Html.ActionLink("Редактировать", "EditEmployee", new { id = Model.EmployeeId })
     @Html.ActionLink("Удалить", "DeleteEmployee", new { id = Model.EmployeeId })
 

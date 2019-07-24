@@ -1,5 +1,4 @@
-﻿@model ProjectManagement.Models.Project
-
+﻿@model ProjectManagement.Models.CreateProjectViewModel
 @{
     ViewBag.Title = "Создание проекта";
 }
@@ -9,31 +8,60 @@
 
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(model => model.Name, "Название")
+    @Html.LabelFor(model => model.Project.Name, "Название")
     <br />
-    @Html.EditorFor(model => model.Name)
+    @Html.EditorFor(model => model.Project.Name)
     <br /><br />
 
-    @Html.LabelFor(model => model.StartDate, "Дата начала")
+    @Html.LabelFor(model => model.Project.StartDate, "Дата начала")
     <br />
-    @Html.EditorFor(model => model.StartDate)
+    @Html.EditorFor(model => model.Project.StartDate)
     <br /><br />
-    @Html.LabelFor(model => model.FinishDate, "Дата окончания")
+    @Html.LabelFor(model => model.Project.FinishDate, "Дата окончания")
     <br />
-    @Html.EditorFor(model => model.FinishDate)
-    <br /><br />
-
-    @Html.LabelFor(model => model.Priority, "Приоритет")
-    <br />
-    @Html.EditorFor(model => model.Priority)
-    <br /><br />
-    @Html.LabelFor(model => model.CustomerId, "Заказчик")
-    <br />
-    @Html.DropDownListFor(model => model.CustomerId, ViewBag.Cus as SelectList)
+    @Html.EditorFor(model => model.Project.FinishDate)
     <br /><br />
 
-    @Html.DropDownList("emplo", (MultiSelectList)ViewBag.Emp, new { multiple = "multiple" })
-   // @Html.ListBox("employeeId", (MultiSelectList)ViewBag.Emp)
+    @Html.LabelFor(model => model.Project.Priority, "Приоритет")
+    <br />
+    @Html.EditorFor(model => model.Project.Priority)
+    <br /><br />
+    @Html.LabelFor(model => model.Project.CustomerId, "Заказчик")
+    <br />
+    @Html.DropDownListFor(model => model.Project.CustomerId, ViewBag.Customer as SelectList)
+    <br /><br />
 
-    <input type="submit" value="Добавить" />
+    @*@Html.DropDownList("emplo", (MultiSelectList)ViewBag.Emp, new { multiple = "multiple" })
+        <br /><br />*@
+
+
+    <a style="margin: 10px 0;" href="javascript:addRow();">Добавить сотрудника</a>
+    <table id="formTable">
+        <thead>
+            <tr>
+                <th>Сотрудник</th>
+                <th>Роль</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DropDownListFor(model => model.Project.EmployeeProjects, ViewBag.Employee as SelectList)</td>
+                <td>@Html.DropDownListFor(model => model.Role, ViewBag.Role as SelectList)</td>
+               @* <td>@Html.DropDownList("selectedLevel", (SelectList)ViewBag.Role, new { @class = "form-control" })</td>*@
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Создать проект" />
+
 }
+
+<script type="text/javascript" src="../../Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    // <![CDATA[
+    function addRow() {
+        //copy the table row and clear the value of the input, then append the row to the end of the table
+        $("#formTable tbody tr:first").clone().find("input").each(function () {
+            $(this).val('');
+        }).end().appendTo("#formTable");
+    }
+// ]]></script>

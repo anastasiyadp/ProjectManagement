@@ -123,6 +123,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AllProjectViewModel.cs" />
+    <Compile Include="Models\CreateProjectViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeProject.cs" />

@@ -17,9 +17,9 @@ namespace ProjectManagement.Models
         [Column(Order = 1)]
         public int ProjectId { get; set; }
 
-        public Role Role { get; set; }
-
         public Employee Employee { get; set; }
         public Project Project { get; set; }
+
+        public Role Role { get; set; }
     }
 }

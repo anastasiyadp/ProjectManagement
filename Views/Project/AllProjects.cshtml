@@ -10,17 +10,18 @@
     <div class="form-inline">
 
         <label class="control-label">Приоритет: </label>
-        @Html.TextBox("priority", Model.FilterProjectModel.SelectedPriority, new { @type = "nubmer" })
+        @Html.TextBox("priority", Model.FilterProjectModel.SelectedPriority, new { @type = "number" })
 
         <label class="control-label">Компания: </label>
         @Html.DropDownList("customer", Model.FilterProjectModel.Customers as SelectList,
                 htmlAttributes: new { @class = "form-control" })
 
+
         @Html.LabelFor(model => model.FilterProjectModel.start)
-        @Html.TextBox("start", Model.FilterProjectModel.start, new { @class = "date" })
+        @Html.TextBox("start", Model.FilterProjectModel.start, new { @class = "date", type="date" })
 
         @Html.LabelFor(model => model.FilterProjectModel.finish)
-        @Html.TextBox("finish", Model.FilterProjectModel.finish, new { @class = "date" })
+        @Html.TextBox("finish", Model.FilterProjectModel.finish, new { @class = "date", type = "date" })
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
 </form>

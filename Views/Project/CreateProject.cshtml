@@ -11,29 +11,29 @@
     @Html.LabelFor(model => model.Project.Name, "Название")
     <br />
     @Html.EditorFor(model => model.Project.Name)
+    @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
     <br /><br />
 
     @Html.LabelFor(model => model.Project.StartDate, "Дата начала")
     <br />
     @Html.EditorFor(model => model.Project.StartDate)
+    @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
     <br /><br />
     @Html.LabelFor(model => model.Project.FinishDate, "Дата окончания")
     <br />
     @Html.EditorFor(model => model.Project.FinishDate)
+    @Html.ValidationMessageFor(model => model.Project.FinishDate, "", new { @class = "text-danger" })
     <br /><br />
 
     @Html.LabelFor(model => model.Project.Priority, "Приоритет")
     <br />
     @Html.EditorFor(model => model.Project.Priority)
+    @Html.ValidationMessageFor(model => model.Project.Priority, "", new { @class = "text-danger" })
     <br /><br />
     @Html.LabelFor(model => model.Project.CustomerId, "Заказчик")
     <br />
     @Html.DropDownListFor(model => model.Project.CustomerId, ViewBag.Customer as SelectList)
     <br /><br />
-
-    @*@Html.DropDownList("emplo", (MultiSelectList)ViewBag.Emp, new { multiple = "multiple" })
-        <br /><br />*@
-
 
     <a style="margin: 10px 0;" href="javascript:addRow();">Добавить сотрудника</a>
     <table id="formTable">
@@ -56,11 +56,9 @@
 
 <script type="text/javascript" src="../../Scripts/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-    // <![CDATA[
     function addRow() {
-        //copy the table row and clear the value of the input, then append the row to the end of the table
         $("#formTable tbody tr:first").clone().find("input").each(function () {
             $(this).val('');
         }).end().appendTo("#formTable");
     }
-// ]]></script>
+</script>

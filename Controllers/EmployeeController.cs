@@ -15,12 +15,12 @@ namespace ProjectManagement.Controllers
 
         public ActionResult AllEmployees()
         {
-            return View(db.Employees.Include(c => c.Implementer).ToList());
+            return View(db.Employees.Include(em => em.Implementer).ToList());
         }
 
         public ActionResult ShowEmployee(int id)
         {
-            Employee employee = db.Employees.Include(c => c.Implementer).Where(c => c.EmployeeId == id).FirstOrDefault();
+            Employee employee = db.Employees.Include(em => em.Implementer).Where(em => em.EmployeeId == id).FirstOrDefault();
             ViewBag.Projects = db.EmployeeProjects.Include(em => em.Project).Where(empr => empr.Employee.EmployeeId == id).ToList();
             if (employee == null)
             {
@@ -46,15 +46,22 @@ namespace ProjectManagement.Controllers
 
         public ActionResult EditEmployee(int Id)
         {
-            Employee employee = db.Employees.Where(empl =>empl.EmployeeId == Id).FirstOrDefault();
-
+            Employee employee = db.Employees.Include(c=>c.Implementer).Where(empl =>empl.EmployeeId == Id).FirstOrDefault();
+            ViewBag.Imp = new SelectList(db.Implementers, "ImplementerId", "Name");
             return View(employee);
         }
 
         [HttpPost]
         public ActionResult EditEmployee(Employee employee)
         {
-            db.Entry(employee).State = EntityState.Modified;
+            Employee emp = db.Employees.Find(employee.EmployeeId);
+            emp.FirstName = employee.FirstName;
+            emp.Surname = employee.Surname;
+            emp.Patronymic = employee.Patronymic;
+            emp.Email = employee.Email;
+            emp.ImplementerId = employee.ImplementerId;
+
+            db.Entry(emp).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("AllEmployees");
         }

@@ -92,21 +92,21 @@ namespace ProjectManagement.Models
                     Name ="Система контроля товаров",
                     StartDate = new DateTime(2019, 3, 2),
                     FinishDate = new DateTime(2019, 9, 2),
-                    Priority = (int)Priority.Высокий,
+                    Priority = 2,
                     CustomerId = 3
                 },
                  new Project {
                     Name ="Система управления складом",
                     StartDate = new DateTime(2019, 7, 17),
                     FinishDate = new DateTime(2020, 2, 17),
-                    Priority = (int)Priority.Средний,
+                    Priority = 1,
                     CustomerId = 1
                 },
                   new Project {
                     Name ="Мобильное приложение для клиентов",
                     StartDate = new DateTime(2019, 1, 15),
                     FinishDate = new DateTime(2019, 5, 15),
-                    Priority = (int)Priority.Низкий,
+                    Priority = 3,
                     CustomerId = 2
                 }
             };

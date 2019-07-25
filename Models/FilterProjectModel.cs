@@ -9,7 +9,7 @@ namespace ProjectManagement.Models
 {
     public class FilterProjectModel
     {
-        public FilterProjectModel(List<Customer> customers, int? customer, DateTime? start, DateTime? finish)
+        public FilterProjectModel(List<Customer> customers, int? customer, DateTime? start, DateTime? finish, int? priority)
         {
             // устанавливаем начальный элемент, который позволит выбрать всех
             customers.Insert(0, new Customer { Name = "Все", CustomerId = 0 });
@@ -17,9 +17,14 @@ namespace ProjectManagement.Models
             SelectedCustomer = customer;
             this.start = start;
             this.finish = finish;
+            SelectedPriority = priority;
         }
         public SelectList Customers { get; private set; } // список компаний
         public int? SelectedCustomer { get; private set; }   // выбранная компания
+
+        public int? SelectedPriority { get; private set; }    // введенное приоритет
+
+
         [DataType(DataType.Date)]
         [Display(Name = "С")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

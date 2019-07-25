@@ -57,12 +57,12 @@
     </div>
 
     <div class="editor-label"><b>Исполнители</b></div>
-        @foreach (var c in ViewBag.Employees)
-        {
-            <input type="checkbox" name="selectedEmployees" value="@c.EmployeeId"
-               @(ViewBag.EmployeesPrj.Contains(c) ? "checked=\"checked\"" : "") />@c.FirstName 
-               @Html.DropDownListFor(model => model.Role, ViewBag.Role as SelectList)
-         }
+    @foreach (var c in ViewBag.Employees)
+    {
+        <input type="checkbox" name="selectedEmployees" value="@c.EmployeeId"
+               @(ViewBag.EmployeesPrj.Contains(c) ? "checked=\"checked\"" : "") />@c.FirstName
+            @Html.DropDownListFor(model => model.Role, ViewBag.Role as SelectList)
+        }
 
 </div>
 
